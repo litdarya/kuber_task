@@ -1,0 +1,49 @@
+version: "3.4"
+
+services:
+  cassandra-seed:
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+    volumes:
+      - "cassandra_seed:/var/lib/cassandra"
+    networks:
+      - cassandra-net
+    environment:
+      - "CASSANDRA_SEEDS=cassandra-seed"
+      - "CASSANDRA_CLUSTER_NAME=Favourite"
+      - "CASSANDRA_DC=se1"
+      - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+    restart: always
+
+  cassandra1:
+    image: cassandra:latest
+    volumes:
+      - "cassandra_second:/var/lib/cassandra"
+    networks:
+      - cassandra-net
+    environment:
+      - "CASSANDRA_SEEDS=cassandra-seed"
+      - "CASSANDRA_CLUSTER_NAME=Favourite"
+      - "CASSANDRA_DC=se1"
+      - "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+    depends_on:
+      - cassandra-seed
+    restart: always
+
+  web:
+    build: .
+    depends_on:
+      - cassandra-seed
+    ports:
+      - "8000:8000"
+    networks:
+      - cassandra-net
+    restart: always
+
+volumes:
+  cassandra_seed:
+  cassandra_second:
+
+networks:
+  cassandra-net:

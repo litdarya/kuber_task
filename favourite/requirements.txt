@@ -1,0 +1,6 @@
+click==6.7
+tornado==5.0.2
+requests==2.21.0
+cassandra-driver>=3.17.0
+aiocassandra>=2.0.1
+cqlsh==5.0.3

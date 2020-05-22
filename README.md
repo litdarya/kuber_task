@@ -1,2 +1,4 @@
-# kuber_task
-Task with minikubes
+# Usage:
+```
+sudo docker-compose up
+```
