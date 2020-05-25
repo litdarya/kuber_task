@@ -104,7 +104,7 @@ class GetAllFavourite(RequestHandler):
             })
             self.finish()
 
-    async def post(self, *args, **kwargs):
+    async def get(self, *args, **kwargs):
         db: DBProxy = self.application.db_proxy
         result = await db.get_all_favourite(user=self.user)
         self.write({"Msg": f'tried to get all favourite {self.user}',
