@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: favapp-deployment
+  labels:
+    app: favapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: favapp 
+  template:
+    metadata:
+      labels:
+        app: favapp
+    spec:
+      initContainers:
+      - name: init-db
+        image: busybox
+        command: ['sh', '-c', 'until nslookup cassandra; do echo waiting for mysql; sleep 2; done;']
+      containers:
+      - name: favapp
+        image: kubeapp:test3
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000

@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: favapp-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  labels: 
+    app: favapp 
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: favapp-service
+          servicePort: 80

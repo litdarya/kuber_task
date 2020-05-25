@@ -1,0 +1,5 @@
+commonLabels:
+  app: cassandra
+resources:
+  - db-service.yaml
+  - db-statefulset.yaml

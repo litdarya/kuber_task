@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: favapp-service
+  labels:
+    app: favapp
+spec:
+  type: LoadBalancer
+  ports:
+  - name: api
+    port: 80
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    app: favapp
