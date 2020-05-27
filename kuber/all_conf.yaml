@@ -54,11 +54,13 @@ spec:
         app: favourite
     spec:
       containers:
-      - image: kubeapp:test3
-        imagePullPolicy: Never
+      - image: registry.gitlab.atp-fivt.org/tpos2020/litvintsevada-tposhw/favapp:latest
+        imagePullPolicy: Always
         name: favapp
         ports:
         - containerPort: 8000
+      imagePullSecrets:
+      - name: registrypullsecret
       initContainers:
       - command:
         - sh
@@ -102,8 +104,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
-        image: cassandra_mi8:latest
-        imagePullPolicy: Never
+        image: registry.gitlab.atp-fivt.org/tpos2020/litvintsevada-tposhw/cassandra:latest
+        imagePullPolicy: Always
         lifecycle:
           postStart:
             exec:
@@ -145,7 +147,11 @@ spec:
         volumeMounts:
         - mountPath: /cassandra_data
           name: cassandra-data
+      imagePullSecrets:
+      - name: registrypullsecret
       terminationGracePeriodSeconds: 1800
+  updateStrategy:
+    type: RollingUpdate
   volumeClaimTemplates:
   - metadata:
       labels:

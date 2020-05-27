@@ -20,7 +20,9 @@ spec:
         command: ['sh', '-c', 'until nslookup cassandra; do echo waiting for mysql; sleep 2; done;']
       containers:
       - name: favapp
-        image: kubeapp:test3
-        imagePullPolicy: Never
+        image: registry.gitlab.atp-fivt.org/tpos2020/litvintsevada-tposhw/favapp:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
+      imagePullSecrets:
+        - name: registrypullsecret
